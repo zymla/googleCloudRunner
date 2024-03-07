@@ -128,7 +128,7 @@ make_endpoint <- function(endbit) {
 
   sprintf(
     # "https://%s-run.googleapis.com/apis/serving.knative.dev/v1/%s",
-    "https://run.googleapis.com/apis/run.googleapis.com/v1/%s", # JZ
+    "https://%s-run.googleapis.com/apis/run.googleapis.com/v1/%s", # JZ
     region, endbit
   )
 }
