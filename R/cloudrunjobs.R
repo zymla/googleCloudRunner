@@ -197,6 +197,8 @@ parse_job_list <- function(x) {
 }
 
 parse_job_list_post <- function(x) {
+  print(str(x$spec$template$spec$template$spec$containers))
+  print(str(x$metadata$name))
   data.frame(
     name = x$metadata$name,
     container = #unlist(lapply(
