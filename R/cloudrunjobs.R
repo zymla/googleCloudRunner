@@ -205,8 +205,8 @@ parse_job_list_post <- function(x) {
   data.frame(
     name = x$metadata$name,
     container = unlist(lapply(
-      x$spec$template$spec$template,
-      function(x) x$spec$containers$image
+      x$spec$template$spec$template$spec$containers,
+      function(x) x$image
     )),
     taskCount = x$spec$template$spec$taskCount,
     url = x$status$url,
