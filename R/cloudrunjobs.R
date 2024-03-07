@@ -181,6 +181,7 @@ cr_run_job_list <- function(projectId = cr_project_get(),
   print(o)
   print(tibble::as_tibble(o))
   print(str(o))
+  print(rjson::toJSON(o))
   parse_job_list_post(o)
 }
 
@@ -198,6 +199,8 @@ parse_job_list <- function(x) {
 
 parse_job_list_post <- function(x) {
   print(str(x$spec$template$spec$template$spec$containers))
+  print(str(x$spec$template$spec$template$spec))
+  print(str(x$spec$template$spec$template))
   print(str(x$metadata$name))
   data.frame(
     name = x$metadata$name,
