@@ -179,6 +179,7 @@ cr_run_job_list <- function(projectId = cr_project_get(),
     return(o)
   }
   print(o)
+  print(tibble::as_tibble(o))
   print(str(o))
   parse_job_list_post(o)
 }
