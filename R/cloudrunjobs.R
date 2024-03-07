@@ -217,7 +217,7 @@ parse_job_list_post <- function(x) {
 #' @importFrom googleAuthR gar_api_generator
 #' @family Cloud Run functions
 #' @export
-cr_run_get <- function(name, projectId = cr_project_get()) {
+cr_run_job_get <- function(name, projectId = cr_project_get()) {
   url <- make_endpoint(sprintf(
     "namespaces/%s/jobs/%s",
     projectId, name
