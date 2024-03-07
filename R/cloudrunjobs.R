@@ -187,8 +187,10 @@ cr_run_job_list <- function(projectId = cr_project_get(),
 #' @noRd
 #' @import assertthat
 parse_job_list <- function(x) {
+  print("x$kind")
+  print(x$kind)
   assert_that(
-    x$kind == "Job"
+    x$kind == "JobList"
   )
 
   x$items
