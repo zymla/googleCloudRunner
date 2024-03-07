@@ -201,10 +201,10 @@ parse_job_list_post <- function(x) {
   print(str(x$metadata$name))
   data.frame(
     name = x$metadata$name,
-    container = #unlist(lapply(
-      x$spec$template$spec$template$spec$containers,
-      #function(x) x$image
-    #)),
+    container = unlist(lapply(
+      x$spec$template$spec$template,
+      function(x) x$spec$containers$image
+    )),
     taskCount = x$spec$template$spec$taskCount,
     url = x$status$url,
     stringsAsFactors = FALSE
