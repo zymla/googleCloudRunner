@@ -178,18 +178,18 @@ cr_run_job_list <- function(projectId = cr_project_get(),
   if (!summary) {
     return(o)
   }
-  print(o)
-  print(tibble::as_tibble(o))
-  print(str(o))
-  print(rjson::toJSON(o))
+  # print(o)
+  # print(tibble::as_tibble(o))
+  # print(str(o))
+  # print(rjson::toJSON(o))
   parse_job_list_post(o)
 }
 
 #' @noRd
 #' @import assertthat
 parse_job_list <- function(x) {
-  print("x$kind")
-  print(x$kind)
+  # print("x$kind")
+  # print(x$kind)
   assert_that(
     x$kind == "JobList"
   )
@@ -198,10 +198,10 @@ parse_job_list <- function(x) {
 }
 
 parse_job_list_post <- function(x) {
-  print(str(x$spec$template$spec$template$spec$containers))
-  print(str(x$spec$template$spec$template$spec))
-  print(str(x$spec$template$spec$template))
-  print(str(x$metadata$name))
+#  print(str(x$spec$template$spec$template$spec$containers))
+#  print(str(x$spec$template$spec$template$spec))
+#  print(str(x$spec$template$spec$template))
+#  print(str(x$metadata$name))
   data.frame(
     name = x$metadata$name,
     container = unlist(lapply(
@@ -209,7 +209,7 @@ parse_job_list_post <- function(x) {
       function(x) x$image
     )),
     taskCount = x$spec$template$spec$taskCount,
-    url = x$status$url,
+    # url = x$status$url, JZ
     stringsAsFactors = FALSE
   )
 }
