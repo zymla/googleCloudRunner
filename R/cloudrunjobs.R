@@ -188,7 +188,7 @@ cr_run_job_list <- function(projectId = cr_project_get(),
 #' @import assertthat
 parse_job_list <- function(x) {
   assert_that(
-    x$kind == "JobList"
+    x$kind == "Job"
   )
 
   x$items
@@ -201,6 +201,7 @@ parse_job_list_post <- function(x) {
       x$spec$template$spec$containers,
       function(x) x$image
     )),
+    taskCount = x$spec$template$spec$taskCount,
     url = x$status$url,
     stringsAsFactors = FALSE
   )
