@@ -178,7 +178,7 @@ cr_run_job_list <- function(projectId = cr_project_get(),
   if (!summary) {
     return(o)
   }
-
+  print(o)
   parse_job_list_post(o)
 }
 
