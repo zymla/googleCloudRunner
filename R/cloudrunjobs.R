@@ -7,12 +7,8 @@
 #'
 #' @param image The name of the image to create or use in deployment - \code{gcr.io}
 #' @param name Name for deployment on Cloud Run
-#' @param concurrency How many connections each container instance can serve. Can be up to 80.
-#' @param port Container port to receive requests at. Also sets the $PORT environment variable. Must be a number between 1 and 65535, inclusive. To unset this field, pass the special value "default".
 #' @param region The endpoint region for deployment
 #' @param projectId The GCP project from which the jobs should be listed
-#' @param allowUnauthenticated TRUE if can be reached from public HTTP address. If FALSE will configure a job-email called \code{(name)-cloudrun-invoker@(project-id).iam.gserviceaccount.com}
-#' @param max_instances the desired maximum nuimber of container instances. "default" is 1000, you can get more if you requested a quota instance.  For Shiny instances on Cloud Run, this needs to be 1.
 #' @param memory The format for size is a fixed or floating point number followed by a unit: G, M, or K corresponding to gigabyte, megabyte, or kilobyte, respectively, or use the power-of-two equivalents: Gi, Mi, Ki corresponding to gibibyte, mebibyte or kibibyte respectively. The default is 256Mi
 #' @param cpu 1 or 2 CPUs for your instance
 #' @param env_vars Environment arguments passed to the Cloud Run container at runtime.  Distinct from \code{env} that run at build time.

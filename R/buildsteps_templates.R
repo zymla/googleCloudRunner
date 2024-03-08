@@ -430,7 +430,7 @@ cr_buildstep_run_job <- function(name,
       "--platform", "managed",
       "--tasks", task_count,
 #      "--parallelism", parallelism, ## JZ make it optional
-      "--max-retries", max_instances,
+      "--max-retries", max_retries,
       "--memory", memory,
       "--cpu", cpu,
       env_vars,
