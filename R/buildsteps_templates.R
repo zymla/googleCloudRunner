@@ -434,7 +434,6 @@ cr_buildstep_run_job <- function(name,
       "--memory", memory,
       "--cpu", cpu,
       env_vars,
-      auth_calls,
       gcloud_args
     ),
     id = "deploy cloudrunjobs", ...
