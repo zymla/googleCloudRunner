@@ -42,10 +42,8 @@
 #' }
 cr_run_job <- function(image,
                    name = basename(image),
-                   allowUnauthenticated = TRUE,
-                   concurrency = 1,
-                   port = NULL,
-                   max_instances = "default",
+                   task_count = 1,
+                   max_retries = 3,
                    memory = "256Mi",
                    cpu = 1,
                    timeout = 600L,
@@ -61,22 +59,20 @@ cr_run_job <- function(image,
 
   assert_that(
     is.string(image),
-    is.string(name),
-    is.flag(allowUnauthenticated)
+    is.string(name)
   )
 
   # use cloud build to deploy
   run_yaml <- cr_build_yaml(
     steps = c(
       cr_buildstep_docker_auth(image = image),
-      cr_buildstep_run(
+      cr_buildstep_run_job(
         name = name,
         image = image,
-        allowUnauthenticated = allowUnauthenticated,
         region = region,
-        concurrency = concurrency,
-        port = port,
-        max_instances = max_instances,
+        parallelism = parallelism,
+        task_count = task_count,
+        max_retries = max_retries,
         memory = memory,
         cpu = cpu,
         env_vars = env_vars,
@@ -95,7 +91,7 @@ cr_run_job <- function(image,
   result <- cr_build_wait(build, projectId = projectId)
 
   if (result$status == "SUCCESS") {
-    run <- cr_run_get(name, projectId = projectId)
+    run <- cr_run_job_get(name, projectId = projectId)
     myMessage(paste(
       "#> Running at: ",
       run$status$url
@@ -105,7 +101,7 @@ cr_run_job <- function(image,
 
     return(run)
   } else {
-    myMessage("#Problem deploying to Cloud Run", level = 3)
+    myMessage("#Problem deploying to Cloud Run Job", level = 3)
     return(result)
   }
 }

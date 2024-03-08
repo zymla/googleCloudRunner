@@ -379,6 +379,70 @@ cr_buildstep_run <- function(name,
   c(create_service, deploy_step, auth_step)
 }
 
+#' Create buildsteps to deploy to Cloud Run Job
+#'
+#' @inheritParams cr_run_job
+#' @param ... passed on to \link{cr_buildstep}
+#' @seealso Docs for \href{https://cloud.google.com/sdk/gcloud/reference/run/deploy}{gcloud run deploy this buildstep invokes}
+#' @export
+#' @family Cloud Buildsteps
+cr_buildstep_run_job <- function(name,
+                             image,
+                             region = cr_region_get(),
+                             parallelism = NULL,
+                             task_count = 1,
+                             max_retries = 3,
+                             memory = "256Mi",
+                             cpu = 1,
+                             env_vars = NULL,
+                             gcloud_args = NULL,
+                             ...) {
+
+  # don't allow dot names that would break things
+  dots <- list(...)
+  assert_that(
+    is.null(dots$args),
+    is.null(dots$name),
+    is.null(dots$prefix),
+    is.null(dots$id)
+  )
+
+  create_job <- NULL
+
+  auth_step <- NULL
+
+  if (!is.null(env_vars)) {
+    env_vars <- paste0("--set-env-vars=", paste(env_vars, collapse = ","))
+  } else {
+    env_vars <- "--clear-env-vars"
+  }
+
+  if (!is.null(gcloud_args)) {
+    assert_that(is.character(gcloud_args))
+  }
+
+  deploy_step <- cr_buildstep_gcloud(
+    args = c(
+      "gcloud",
+      "run", "jobs", "create", name,
+      "--image", image,
+      "--region", region,
+      "--platform", "managed",
+      "--tasks", task_count,
+#      "--parallelism", parallelism, ## JZ make it optional
+      "--max-retries", max_instances,
+      "--memory", memory,
+      "--cpu", cpu,
+      env_vars,
+      auth_calls,
+      gcloud_args
+    ),
+    id = "deploy cloudrunjobs", ...
+  )
+
+  c(create_job, deploy_step, auth_step)
+}
+
 #' Run a bash script in a Cloud Build step
 #'
 #' Helper to run a supplied bash script, that will be copied in-line
